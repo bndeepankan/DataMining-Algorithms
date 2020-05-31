@@ -7,7 +7,9 @@ import copy
 def dfs_list(itemsets, frequentSet):
     # Depth first search frequent itemset mining algorithm
     itemsets = remove_infrequent_items(itemsets, threshold)
-    print("Database %s and itemsets" % itemsets, frequentSet)
+    if sum(itemsets, []) == []:
+        print("Frequent itemset", frequentSet)
+        return frequentSet
     linear_order = list(OrderedSet(sum(itemsets, [])))
     for parsing in linear_order:
         itemsets1 = copy.deepcopy(itemsets)
@@ -28,9 +30,9 @@ def dfs_list(itemsets, frequentSet):
 def sort_items_order(itemset, frequentSet):
     # Deleting the items according to the defined linear order
     if frequentSet:
-        if frequentSet[-1] in numItems:
-            i = numItems.index(frequentSet[-1])
-            for i in numItems[:i]:
+        if frequentSet[-1] in linear_order:
+            i = linear_order.index(frequentSet[-1])
+            for i in linear_order[:i]:
                 k = 0
                 while k < len(itemset):
                     if i in itemset[k]:
@@ -72,12 +74,6 @@ data = {'TID': [1,2,3,4,5], 'Itemset': [list('MONKEY'), list('DONKEY'), list('MA
 df = pd.DataFrame(data)
 
 database = df['Itemset'].tolist()
-
+threshold = 3
 linear_order = list(OrderedSet(sum(database, [])))
-
-threshold = 2
-frequentItemset = []
-
-numItems = list(OrderedSet(sum(database, [])))
-
 dfs_list(copy.deepcopy(database), "")
