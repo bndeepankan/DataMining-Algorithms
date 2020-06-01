@@ -1,4 +1,4 @@
 # DataMining-Algorithms
 
-The following algorithms has been implemented
+The following algorithms are implemented
 1) DFS listing algorithm
